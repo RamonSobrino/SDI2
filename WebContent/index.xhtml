@@ -11,29 +11,33 @@
 
 	<ui:define name="cuerpo">
 		<h:form id="form-principal">
+			<!-- XXX: Esto seria la nueva manera de ponerlo, se puede incluso hacer flotante con growl -->
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
 			<p:panelGrid id="Grid" columns="2" cellpadding="5">
- 			 #{msgs.usuario} 
-  			<h:panelGroup>
-					<p:inputText value="#{user.login}" required="true"
-									id="login">
-						<f:validateLength maximum="20" />
+
+				<p:outputLabel for="login" value="#{msgs.usuario} " />
+				<h:panelGroup>
+					<p:inputText value="#{login.name}" required="true" id="login">
+						<f:validateLength minimum="2" />
 					</p:inputText>
 					<p:message for="login" />
 				</h:panelGroup>
-  
-			  #{msgs.password} 
-  			<h:panelGroup>
-					<p:inputText value="#{user.password}" required="true"
-							id="password">
-						<f:validateLength maximum="40" />
-					</p:inputText>
+
+
+				<p:outputLabel for="password" value="#{msgs.password}" />
+				<h:panelGroup>
+					<p:password value="#{login.password}" required="true" id="password">
+					</p:password>
 					<p:message for="password" />
 				</h:panelGroup>
-				
-				<h:commandButton value="#{msgs.botonLogin}"
-			action="#{controller.login}"
-			update ="Grid" process="@form">
-		</h:commandButton>
+
+				<p:commandButton value="#{msgs.botonLogin}" action="#{login.verify}"
+					update="Grid" process="@form">
+				</p:commandButton>
+				<p:commandButton value="#{msgs.botonRegister}" action="/register.xhtml">
+				</p:commandButton>
+				<!-- XXX: Esto nos lo fumariamos <h:outputText id="msgAlta" value="#{msgs[login.result]}" />-->
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

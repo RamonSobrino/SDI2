@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/GTDTaskManager-JSF-PF/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/GTDTaskManager-JSF-PF/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="144" y="144" id="pf14888753050570" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" outlinks="pf14888753050571 pf14888753661153" inlinks="pf14888753661153" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="opciones.xhtml" x="336" y="144" id="pf14888753050572" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14888753050571" path="/opciones.xhtml"/>
+  <links id="pf14888753050571" target="pf14888753050572" source="pf14888753050570" outcome="exito" fromaction="#{login.verify}"/>
+  <links id="pf14888753661153" target="pf14888753050570" source="pf14888753050570" outcome="fallo"/>
+</pageflow:Pageflow>

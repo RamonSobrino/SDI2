@@ -28,6 +28,19 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
+	
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{login.verify}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/opciones.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>fallo</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- Reglas de navegacion -->
 	<!--  <navigation-rule>
 		<from-view-id>*</from-view-id>
