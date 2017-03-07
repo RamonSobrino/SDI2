@@ -35,8 +35,8 @@
 				<p:commandButton value="#{msgs.botonLogin}" action="#{login.verify}"
 					update="Grid" process="@form">
 				</p:commandButton>
-				<p:commandButton value="#{msgs.botonRegister}" action="/register.xhtml">
-				</p:commandButton>
+				<p:commandLink value="#{msgs.botonRegister}" immediate="true" action="/register.xhtml">
+				</p:commandLink>
 				<!-- XXX: Esto nos lo fumariamos <h:outputText id="msgAlta" value="#{msgs[login.result]}" />-->
 			</p:panelGrid>
 		</h:form>
