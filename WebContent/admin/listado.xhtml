@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	 template="/templates/template-admin.xhtml">
+
+	<ui:define name="titulo">
+    #{msgs.tituloOperacionListadoAdmin}
+  </ui:define>
+
+	<ui:define name="cuerpo">
+		<h:form>
+			<p:panel header="#{msgs.tituloOperacionListadoAdmin}">
+				<p:dataTable var="vuser" value="#{controller.users}" border="1">
+					<p:column sortBy ="#{vuser.id}">
+						<f:facet name="header">#{msgs.tablaId}</f:facet>#{vuser.id}</p:column>
+					<p:column sortBy ="#{vuser.login}">
+						<f:facet name="header">#{msgs.tablaLogin}</f:facet>#{vuser.login}</p:column>
+					<p:column sortBy ="#{vuser.email}">
+						<f:facet name="header">#{msgs.tablaEmail}</f:facet>#{vuser.email}</p:column>
+					<p:column sortBy ="#{vuser.status}">
+						<f:facet name="header">#{msgs.tablaStatus}</f:facet>#{user.status}</p:column>
+					<p:column>
+						<f:facet name="header">#{msgs.tablaDesactivar}</f:facet>
+						<p:commandLink action="desactivar" type="submit"
+							value="#{msgs.tablaDesactivar}"
+							immediate="true">
+						</p:commandLink>
+					</p:column>
+					<p:column>
+						<f:facet name="header">#{msgs.tablaDel}</f:facet>
+						<h:commandLink type="submit"
+							value="#{msgs.tablaDel}" 
+							immediate="true" >
+						</h:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+	<ui:define name="pie">
+		<ui:include src="/snippets/pie-casa.xhtml" />
+	</ui:define>
+</ui:composition>

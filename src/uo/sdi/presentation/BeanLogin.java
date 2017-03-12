@@ -40,7 +40,13 @@ public class BeanLogin implements Serializable {
 		}
 		if (user != null) {
 			putUserInSession(user);
-			return "exito";
+			
+			if(user.getIsAdmin())
+			{
+				return "exitoAdministrador";
+			}
+			
+			return "exitoUser";
 		}
 		// setResult("login_form_result_error");
 		//XXX: Esto es otra opcion para generar mensajes que me parece que queda mejor la verdad

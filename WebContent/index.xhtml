@@ -11,7 +11,6 @@
 
 	<ui:define name="cuerpo">
 		<h:form id="form-principal">
-			<!-- XXX: Esto seria la nueva manera de ponerlo, se puede incluso hacer flotante con growl -->
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 			<p:panelGrid id="Grid" columns="2" cellpadding="5">
@@ -37,7 +36,6 @@
 				</p:commandButton>
 				<p:commandLink value="#{msgs.botonRegister}" immediate="true" action="/register.xhtml">
 				</p:commandLink>
-				<!-- XXX: Esto nos lo fumariamos <h:outputText id="msgAlta" value="#{msgs[login.result]}" />-->
 			</p:panelGrid>
 		</h:form>
 	</ui:define>

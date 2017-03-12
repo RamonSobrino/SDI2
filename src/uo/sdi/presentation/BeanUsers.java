@@ -1,14 +1,21 @@
 package uo.sdi.presentation;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.*;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 
 import uo.sdi.business.AdminService;
 import uo.sdi.business.Services;
+import uo.sdi.business.TaskService;
 import uo.sdi.business.UserService;
+import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
 
 @ManagedBean(name = "controller")
@@ -25,21 +32,40 @@ public class BeanUsers implements Serializable {
 	@ManagedProperty(value = "#{user}")
 	private BeanUser user;
 
-	private User[] users = null;
+	//private User[] users = null;
+	private List<User> users =null;
+	//private Task[] tasks =null;
+	private List<Task> tasks =null;
+
+	/*public Task[] getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(Task[] tasks) {
+		this.tasks = tasks;
+	}*/
 
 	public BeanUser getUser() {
 		return user;
+	}
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	public void setUser(BeanUser user) {
 		this.user = user;
 	}
 
-	public User[] getUsers() {
+	public List<User> getUsers() {
 		return (users);
 	}
 
-	public void setUsers(User[] users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 
@@ -75,8 +101,32 @@ public class BeanUsers implements Serializable {
 			service = Services.getAdminService();
 			// De esta forma le damos informaci��n a toArray para poder hacer el
 			// casting a User[]
-			users = (User[]) service.findAllUsers().toArray(new User[0]);
+			//users = (User[]) service.findAllUsers().toArray(new User[0]);
+			users =  service.findAllUsers();
+			return "exito"; // Nos vamos a la vista listado.xhtml
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // Nos vamos la vista de error
+		}
+
+	}
+	
+	public String listadoTareas() {
+		TaskService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a trav��s de la factor��a
+			service = Services.getTaskService();
+			// De esta forma le damos informaci��n a toArray para poder hacer el
+			// casting a User[]
+			FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+			User user =(User) session.getAttribute("LOGGEDIN_USER");
+			
+			List<Task> lista = service.findInboxTasksByUserId(user.getId());
+			tasks = lista;//(Task[]) lista.toArray(new Task[0]);
+			
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -86,7 +136,7 @@ public class BeanUsers implements Serializable {
 
 	}
 
-	public String baja(User user) {
+	public String baja(User vuser) {
 		AdminService service;
 		try {
 			// Acceso a la implementacion de la capa de negocio
@@ -95,7 +145,8 @@ public class BeanUsers implements Serializable {
 			// Aliminamos el User seleccionado en la tabla
 			service.deepDeleteUser(user.getId());
 			// Actualizamos el javabean de Users inyectado en la tabla.
-			users = (User[]) service.findAllUsers().toArray(new User[0]);
+			//users = (User[]) service.findAllUsers().toArray(new User[0]);
+			users = service.findAllUsers();
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
@@ -143,6 +194,16 @@ public class BeanUsers implements Serializable {
 			return "error"; // Nos vamos a la vista de error.
 		}
 
+	}
+	
+	public String reiniciar()
+	{
+		return "exito";
+	}
+	
+	public String cerrar()
+	{
+		return "exito";
 	}
 	
 	

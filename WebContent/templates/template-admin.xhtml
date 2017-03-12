@@ -13,7 +13,18 @@
 	<h:body>
 		<h:form id="form-cabecera">
 			<p:menubar>
-					
+			
+			<p:submenu label="#{msgs.tituloOpciones}" icon="ui-icon-document">
+					<p:menuitem value="#{msgs.init_db}"
+						action="#{controller.reiniciar()}" />
+					<p:separator />
+					<p:menuitem value="#{msgs.listUser}" 
+								action="#{controller.listado()}" />
+					<p:separator />
+					<p:menuitem value="#{msgs.cerrar_sesion}"
+						action="/index.xhtml" />
+				</p:submenu>
+			
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}">
 					<p:menuitem value="#{msgs.enlaceIdiomaES}"
 						actionListener="#{settings.setSpanish}" update="@all">
