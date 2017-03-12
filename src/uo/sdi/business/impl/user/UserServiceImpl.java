@@ -3,6 +3,7 @@ package uo.sdi.business.impl.user;
 import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.business.impl.command.CommandExecutor;
+import uo.sdi.business.impl.user.command.AddUserCommand;
 import uo.sdi.business.impl.user.command.FindLoggableUSerCommand;
 import uo.sdi.business.impl.user.command.FindUserCommand;
 import uo.sdi.business.impl.user.command.RegisterUserCommand;
@@ -37,6 +38,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUser(Long id) throws BusinessException {
 		return new CommandExecutor<User>().execute(new FindUserCommand<User>(id));
+	}
+
+	@Override
+	public Long addUser(User user) throws BusinessException {
+		return new CommandExecutor<Long>().execute( 
+				new AddUserCommand( user ) 
+		);
 	}
 
 	

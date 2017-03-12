@@ -10,4 +10,5 @@ public interface UserService {
 	public User findLoggableUser(String login, String password) throws BusinessException;
 	public User findUser(Long id) throws BusinessException;
 
+	public Long addUser(User user) throws BusinessException;
 }

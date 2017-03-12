@@ -92,4 +92,9 @@ public class UserDaoJdbcImpl implements UserDao {
 			);
 	}
 
+	@Override
+	public void deleteAllUsers() {
+		jdbcTemplate.execute("USER_DELETE_ALL");
+	}
+
 }

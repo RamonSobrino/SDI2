@@ -8,6 +8,7 @@ import uo.sdi.business.impl.admin.command.DeepDeleteUserCommand;
 import uo.sdi.business.impl.admin.command.DisableUserCommand;
 import uo.sdi.business.impl.admin.command.EnableUserCommand;
 import uo.sdi.business.impl.admin.command.FindAllUsersCommand;
+import uo.sdi.business.impl.admin.command.InitDataBaseCommand;
 import uo.sdi.business.impl.command.Command;
 import uo.sdi.business.impl.command.CommandExecutor;
 import uo.sdi.dto.User;
@@ -42,6 +43,11 @@ public class AdminServiceImpl implements AdminService {
 				return Persistence.getUserDao().findById(id);
 			}
 		});
+	}
+
+	@Override
+	public void initDataBase() throws BusinessException {
+		new CommandExecutor<Void>().execute( new InitDataBaseCommand());		
 	}
 
 }

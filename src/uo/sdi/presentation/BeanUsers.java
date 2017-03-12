@@ -198,7 +198,19 @@ public class BeanUsers implements Serializable {
 	
 	public String reiniciar()
 	{
-		return "exito";
+		AdminService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a trav��s de la factor��a
+			service = Services.getAdminService();
+			// Aliminamos el User seleccionado en la tabla
+			service.initDataBase();
+			return "exito"; // Nos vamos a la vista de listado.
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // Nos vamos a la vista de error
+		}
 	}
 	
 	public String cerrar()
