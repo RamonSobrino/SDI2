@@ -14,12 +14,15 @@
 		<h:form id="form-cabecera">
 			<p:menubar>
 					
-				<p:submenu style="float:right" label="#{msgs.textoIdioma}">
+				<p:submenu style="float:right" label="#{msgs.textoIdioma}"
+					id = "MenuIdiomas"	>
 					<p:menuitem value="#{msgs.enlaceIdiomaES}"
-						actionListener="#{settings.setSpanish}" update="@all">
+						actionListener="#{settings.setSpanish}" update="@all"
+						id ="spanish">
 					</p:menuitem>
 					<p:menuitem value="#{msgs.enlaceIdiomaEN}"
-						actionListener="#{settings.setEnglish}" update="@all">
+						actionListener="#{settings.setEnglish}" update="@all"
+						id = "english">
 					</p:menuitem>
 				</p:submenu>
 			</p:menubar>
