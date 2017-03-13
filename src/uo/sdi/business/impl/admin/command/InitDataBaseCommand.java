@@ -1,10 +1,7 @@
 package uo.sdi.business.impl.admin.command;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import alb.util.date.DateUtil;
 import uo.sdi.business.AdminService;
 import uo.sdi.business.Services;
 import uo.sdi.business.TaskService;
@@ -14,10 +11,9 @@ import uo.sdi.business.impl.command.Command;
 import uo.sdi.dto.Category;
 import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
-import uo.sdi.persistence.CategoryDao;
 import uo.sdi.persistence.Persistence;
-import uo.sdi.persistence.TaskDao;
 import uo.sdi.persistence.UserDao;
+import alb.util.date.DateUtil;
 
 public class InitDataBaseCommand implements Command<Void> {
 

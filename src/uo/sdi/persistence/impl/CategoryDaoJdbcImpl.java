@@ -6,7 +6,6 @@ import java.util.List;
 
 import uo.sdi.dto.Category;
 import uo.sdi.persistence.CategoryDao;
-import uo.sdi.persistence.impl.TaskDaoJdbcImpl.TaskDtoMapper;
 import uo.sdi.persistence.util.JdbcTemplate;
 import uo.sdi.persistence.util.RowMapper;
 

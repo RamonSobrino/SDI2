@@ -32,9 +32,10 @@
 				</h:panelGroup>
 
 				<p:commandButton value="#{msgs.botonLogin}" action="#{login.verify}"
-					update="Grid" process="@form">
+					update="Grid" process="@form" id= "aceppt">
 				</p:commandButton>
-				<p:commandLink value="#{msgs.botonRegister}" immediate="true" action="/register.xhtml">
+				<p:commandLink value="#{msgs.botonRegister}" immediate="true" action="/register.xhtml"
+				id= "register">
 				</p:commandLink>
 			</p:panelGrid>
 		</h:form>
