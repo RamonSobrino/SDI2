@@ -100,6 +100,10 @@ public class User {
 		this.status = status;
 		return this;
 	}
+	
+	public boolean isEnabled(){
+		return status.equals(UserStatus.ENABLED);
+	}
 
 	@Override
 	public int hashCode() {

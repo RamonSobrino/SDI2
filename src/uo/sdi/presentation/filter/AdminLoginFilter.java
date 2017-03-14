@@ -63,11 +63,11 @@ public class AdminLoginFilter implements Filter {
 
 		if (user == null) {
 			String loginForm = config.getInitParameter("LoginParam");
-			FacesContext.getCurrentInstance().addMessage(
+			/*FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
 							.getString("error"), bundle
-							.getString("error_not_logedin")));
+							.getString("error_not_logedin")));*/
 			res.sendRedirect(req.getContextPath() + loginForm);
 			return;
 		} else {

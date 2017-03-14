@@ -1,10 +1,13 @@
 package uo.sdi.presentation;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -15,8 +18,10 @@ import uo.sdi.business.AdminService;
 import uo.sdi.business.Services;
 import uo.sdi.business.TaskService;
 import uo.sdi.business.UserService;
+import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.Task;
 import uo.sdi.dto.User;
+import uo.sdi.infrastructure.BundleFactorie;
 
 @ManagedBean(name = "controller")
 @SessionScoped
@@ -32,18 +37,16 @@ public class BeanUsers implements Serializable {
 	@ManagedProperty(value = "#{user}")
 	private BeanUser user;
 
-	//private User[] users = null;
-	private List<User> users =null;
-	//private Task[] tasks =null;
-	private List<Task> tasks =null;
+	// private User[] users = null;
+	private List<User> users = null;
+	// private Task[] tasks =null;
+	private List<Task> tasks = null;
 
-	/*public Task[] getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Task[] tasks) {
-		this.tasks = tasks;
-	}*/
+	/*
+	 * public Task[] getTasks() { return tasks; }
+	 * 
+	 * public void setTasks(Task[] tasks) { this.tasks = tasks; }
+	 */
 
 	public BeanUser getUser() {
 		return user;
@@ -80,8 +83,8 @@ public class BeanUsers implements Serializable {
 		System.out.println("BeanUsers - PostConstruct");
 		// Buscamos el User en la sesión. Esto es un patrón factoría
 		// claramente.
-		//FIXME:
-		//user = Factories.beans.createBeanUser();
+		// FIXME:
+		// user = Factories.beans.createBeanUser();
 	}
 
 	@PreDestroy
@@ -101,8 +104,8 @@ public class BeanUsers implements Serializable {
 			service = Services.getAdminService();
 			// De esta forma le damos informaci��n a toArray para poder hacer el
 			// casting a User[]
-			//users = (User[]) service.findAllUsers().toArray(new User[0]);
-			users =  service.findAllUsers();
+			// users = (User[]) service.findAllUsers().toArray(new User[0]);
+			users = service.findAllUsers();
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -111,7 +114,7 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
-	
+
 	public String listadoTareas() {
 		TaskService service;
 		try {
@@ -120,13 +123,15 @@ public class BeanUsers implements Serializable {
 			service = Services.getTaskService();
 			// De esta forma le damos informaci��n a toArray para poder hacer el
 			// casting a User[]
-			FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
-			HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
-			User user =(User) session.getAttribute("LOGGEDIN_USER");
-			
+			FacesContext context = javax.faces.context.FacesContext
+					.getCurrentInstance();
+			HttpSession session = (HttpSession) context.getExternalContext()
+					.getSession(false);
+			User user = (User) session.getAttribute("LOGGEDIN_USER");
+
 			List<Task> lista = service.findInboxTasksByUserId(user.getId());
-			tasks = lista;//(Task[]) lista.toArray(new Task[0]);
-			
+			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -143,15 +148,57 @@ public class BeanUsers implements Serializable {
 			// a trav��s de la factor��a
 			service = Services.getAdminService();
 			// Aliminamos el User seleccionado en la tabla
-			service.deepDeleteUser(user.getId());
+			service.deepDeleteUser(vuser.getId());
 			// Actualizamos el javabean de Users inyectado en la tabla.
-			//users = (User[]) service.findAllUsers().toArray(new User[0]);
+			// users = (User[]) service.findAllUsers().toArray(new User[0]);
 			users = service.findAllUsers();
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error"; // Nos vamos a la vista de error
+		}
+
+	}
+
+	public String deactivate(User vuser) {
+		AdminService service;
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		service = Services.getAdminService();
+		FacesContext cont = FacesContext.getCurrentInstance();
+		try {
+			service.disableUser(vuser.getId());
+			String message = bundle.getString("correct_deactivate");
+			message = MessageFormat.format(message, vuser.getLogin());
+			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					bundle.getString("success"), message));
+			users = service.findAllUsers();
+			return "exito";
+		} catch (BusinessException e) {
+			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					bundle.getString("error"), e.getMessage()));
+			return null;
+		}
+
+	}
+
+	public String activate(User vuser) {
+		AdminService service;
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		service = Services.getAdminService();
+		FacesContext cont = FacesContext.getCurrentInstance();
+		try {
+			service.enableUser(vuser.getId());
+			String message = bundle.getString("correct_activate");
+			message = MessageFormat.format(message, vuser.getLogin());
+			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					bundle.getString("success"), message));
+			users = service.findAllUsers();
+			return "exito";
+		} catch (BusinessException e) {
+			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					bundle.getString("error"), e.getMessage()));
+			return null;
 		}
 
 	}
@@ -195,33 +242,39 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
-	
-	public String reiniciar()
-	{
+
+	public String reiniciar() {
 		AdminService service;
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		FacesContext cont = FacesContext.getCurrentInstance();
 		try {
-			// Acceso a la implementacion de la capa de negocio
-			// a trav��s de la factor��a
+
 			service = Services.getAdminService();
-			// Aliminamos el User seleccionado en la tabla
 			service.initDataBase();
+			cont.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, bundle
+							.getString("success"), bundle
+							.getString("success_restart_base")));
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			cont.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
+							.getString("error"), bundle
+							.getString("error_restart_base")));
 			return "error"; // Nos vamos a la vista de error
 		}
 	}
-	
-	public String cerrar()
-	{
+
+	public String cerrar() {
 		return "exito";
 	}
-	
-	
-	public String login()
-	{
+
+	public String login() {
 		return "exito";
 	}
-	
+
 }

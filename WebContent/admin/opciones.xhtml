@@ -10,8 +10,19 @@
     </ui:define>
 
 	<ui:define name="cuerpo">
-
-
+		<div class="ui-g">
+			<div class="ui-g-4">
+				<p:commandButton action="#{controller.reiniciar()}"
+					value="#{msgs.init_db}"></p:commandButton>
+			</div>
+			<div class="ui-g-4">
+				<p:commandButton action="#{controller.listado()}"
+					value="#{msgs.listUser}"></p:commandButton>
+			</div>
+			<div class="ui-g-4">
+				<p:commandButton value="#{msgs.cerrar_sesion}" action="/index.xhtml"></p:commandButton>
+			</div>
+		</div>
 
 
 	</ui:define>
