@@ -11,16 +11,24 @@ import javax.faces.context.FacesContext;
 
 import uo.sdi.business.LoginService;
 import uo.sdi.business.Services;
+import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
+import uo.sdi.dto.types.UserStatus;
 import uo.sdi.infrastructure.BundleFactorie;
 
 @ManagedBean(name = "login")
 @SessionScoped
 public class BeanLogin implements Serializable {
 	private static final long serialVersionUID = 6L;
+	// For login
 	private String name = "";
 	private String password = "";
+
+	// for register
+	private String email = "";
+	private String passwordAgain = "";
+
 	private String result = "login_form_result_valid";
 
 	public BeanLogin() {
@@ -40,22 +48,43 @@ public class BeanLogin implements Serializable {
 		}
 		if (user != null) {
 			putUserInSession(user);
-			
-			if(user.getIsAdmin())
-			{
+
+			if (user.getIsAdmin()) {
 				return "exitoAdministrador";
 			}
-			
+
 			return "exitoUser";
 		}
 		// setResult("login_form_result_error");
-		//XXX: Esto es otra opcion para generar mensajes que me parece que queda mejor la verdad
+		// XXX: Esto es otra opcion para generar mensajes que me parece que
+		// queda mejor la verdad
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
 						.getString("error"), bundle
 						.getString("login_form_result_error")));
 		return "fallo";
+	}
+
+	public String register() {
+		FacesContext cont = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		// TODO: Change to hash password
+		User u = new User().setLogin(name).setEmail(email).setIsAdmin(false)
+				.setPassword(password).setStatus(UserStatus.ENABLED);
+		try {
+			Services.getUserService().registerUser(u);
+			cont.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, bundle
+							.getString("success"), bundle
+							.getString("success_register")));
+		} catch (BusinessException e) {
+			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					bundle.getString("error"), e.getMessage()));
+			e.printStackTrace();
+		}
+		return "error";
 	}
 
 	private void putUserInSession(User user) {
@@ -82,6 +111,22 @@ public class BeanLogin implements Serializable {
 
 	public String getResult() {
 		return result;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasswordAgain() {
+		return passwordAgain;
+	}
+
+	public void setPasswordAgain(String passwordAgain) {
+		this.passwordAgain = passwordAgain;
 	}
 
 	public void setResult(String result) {

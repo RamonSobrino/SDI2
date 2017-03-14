@@ -25,7 +25,7 @@
 
 				<p:outputLabel for="email" value="#{msgs.email} " />
 				<h:panelGroup>
-					<p:inputText required="true" id="email" validatorMessage="#{msgs.error_email}" requiredMessage="#{msgs.requiered_email}">
+					<p:inputText value="#{login.email}" required="true" id="email" validatorMessage="#{msgs.error_email}" requiredMessage="#{msgs.requiered_email}">
 						<f:validateRegex pattern="^.+@.+$" />
 					</p:inputText>
 				</h:panelGroup>
@@ -41,7 +41,7 @@
 
 				<p:outputLabel for="passwordAgain" value="#{msgs.passwordAgain}" />
 				<h:panelGroup>
-					<p:password value="#{login.password}" id="passwordAgain">
+					<p:password value="#{login.passwordAgain}" id="passwordAgain">
 					</p:password>
 				</h:panelGroup>
 
