@@ -40,6 +40,14 @@ public class BeanTask implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	public void setCategory(Long id) {
+		for (Category cat : categorias) {
+			if(cat.getId() == id){
+				this.category =  cat;
+				break;
+			}
+		}
+	}
 
 	private List<Category> categorias;
 	
