@@ -141,6 +141,56 @@ public class BeanUsers implements Serializable {
 
 	}
 
+	public String listadoSemana() {
+		TaskService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a trav��s de la factor��a
+			service = Services.getTaskService();
+			// De esta forma le damos informaci��n a toArray para poder hacer el
+			// casting a User[]
+			FacesContext context = javax.faces.context.FacesContext
+					.getCurrentInstance();
+			HttpSession session = (HttpSession) context.getExternalContext()
+					.getSession(false);
+			User user = (User) session.getAttribute("LOGGEDIN_USER");
+
+			List<Task> lista = service.findWeekTasksByUserId(user.getId());
+			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+
+			return "exito"; // Nos vamos a la vista listado.xhtml
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // Nos vamos la vista de error
+		}
+
+	}
+	public String listadoDia() {
+		TaskService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a trav��s de la factor��a
+			service = Services.getTaskService();
+			// De esta forma le damos informaci��n a toArray para poder hacer el
+			// casting a User[]
+			FacesContext context = javax.faces.context.FacesContext
+					.getCurrentInstance();
+			HttpSession session = (HttpSession) context.getExternalContext()
+					.getSession(false);
+			User user = (User) session.getAttribute("LOGGEDIN_USER");
+
+			List<Task> lista = service.findTodayTasksByUserId(user.getId());
+			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+
+			return "exito"; // Nos vamos a la vista listado.xhtml
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // Nos vamos la vista de error
+		}
+
+	}
 	public String baja(User vuser) {
 		AdminService service;
 		try {
@@ -202,6 +252,8 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
+	
+	
 
 	public String edit() {
 		UserService service;
@@ -219,6 +271,25 @@ public class BeanUsers implements Serializable {
 			return "error"; // Nos vamos a la vista de error.
 		}
 
+	}
+	
+	public String delete(Task vtask)
+	{
+		TaskService service;
+		try {
+			// Acceso a la implementacion de la capa de negocio
+			// a trav��s de la factor��a
+			service = Services.getTaskService();
+			// Eliminamos la Task seleccionado en la tabla
+			service.deleteTask(vtask.getId());
+		
+			this.listadoTareas();
+			return "exito"; // Nos vamos a la vista de listado.
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; // Nos vamos a la vista de error
+		}
 	}
 
 	public String salva() {
@@ -274,6 +345,11 @@ public class BeanUsers implements Serializable {
 	}
 
 	public String login() {
+		return "exito";
+	}
+	
+	public String addTarea()
+	{
 		return "exito";
 	}
 

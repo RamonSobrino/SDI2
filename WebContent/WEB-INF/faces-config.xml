@@ -32,7 +32,11 @@
 		<managed-bean-class>uo.sdi.presentation.BeanLogin</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
+	<managed-bean>
+		<managed-bean-name>task</managed-bean-name>
+		<managed-bean-class>uo.sdi.presentation.BeanTask</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	
 	<navigation-rule>
 		<from-view-id>/index.xhtml</from-view-id>
@@ -81,6 +85,54 @@
 			<from-action>#{controller.addTarea}</from-action>
 			<from-outcome>exito</from-outcome>
 			<to-view-id>/user/altaTarea.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>fallo</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+		<navigation-rule>
+		<from-view-id>/user/listado.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{task.establecer(vtask)}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/editTarea.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controller.addTarea}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/altaTarea.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-action>#{controller.listadoTareas}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/listado.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>fallo</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		</navigation-rule>
+	
+		<navigation-rule>
+		<from-view-id>/user/altaTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{task.add}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/listado.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>fallo</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/user/editTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{task.edit}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/listado.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>fallo</from-outcome>

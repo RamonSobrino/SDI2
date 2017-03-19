@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/template-user.xhtml">
+
+	<ui:define name="titulo">
+      #{msgs.tituloAltaTarea}
+    </ui:define>
+
+	<ui:define name="cuerpo">
+		<h:form id="form-alta">
+
+		<p:panelGrid id="Grid" columns="2" cellpadding="5">
+  #{msgs.tareaTitulo} 
+  <h:panelGroup>
+				<p:inputText value="#{task.tittle}" required="true"
+					requiredMessage="#{msgs.formAlta_titulo_requiredMessage}"
+					validatorMessage="#{msgs.formAlta_titulo_validatorMessage}"
+					id="titulo">
+					<f:validateLength maximum="20" />
+				</p:inputText>
+			</h:panelGroup>
+  
+  #{msgs.tareaCategoria} 
+  <h:panelGroup>
+				<p:inputText value="#{task.category}" 
+					id="category">
+				</p:inputText>
+			</h:panelGroup>
+  
+  #{msgs.tareaComentario}
+  <h:panelGroup>
+				<p:inputText value="#{task.comments}"
+					validatorMessage="#{msgs.formAlta_comment_validatorMessage}"
+					id="comentario">
+					<f:validateLength maximum="80" />
+				</p:inputText>
+			</h:panelGroup>  
+  
+    #{msgs.tareaPlaneada}
+  <h:panelGroup>
+				<p:inputText value="#{task.planned}" 
+					id="planned">
+					<f:convertDateTime pattern="dd-MMM-yyyy" />
+					
+				</p:inputText>
+			</h:panelGroup>
+			
+  #{msgs.tareaFinalizada}
+  <h:panelGroup>
+				<p:inputText value="#{task.finished}" 
+					id="finished">
+ 					<f:convertDateTime pattern="dd-MMM-yyyy" />
+				</p:inputText>
+			</h:panelGroup>
+
+
+			<h:commandButton value="#{msgs.botonSalvar}"
+				action="#{task.edit}" update="Grid" process="@form">
+			</h:commandButton>
+		</p:panelGrid>
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="pie">
+	</ui:define>
+
+</ui:composition>
+

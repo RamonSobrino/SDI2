@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/GTDTaskManager-JSF-PF/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf14892685177528" referenceLink="//@navigationRule.2/@navigationCase.2/@toViewId|" outlinks="pf14892685177529 pf148926851775210 pf148926851775211" inlinks="pf148926851775211 pf148927125165318" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/opciones.xhtml" id="pf148926851775213" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" outlinks="pf148926851775214 pf14894840522430 pf14894840665161" inlinks="pf14892685177529 pf14894840522430 pf14894840665161" path="/admin/opciones.xhtml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/sdi2-16/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf14892685177528" referenceLink="//@navigationRule.3/@navigationCase.3/@toViewId|" outlinks="pf14892685177529 pf148926851775210 pf148926851775211" inlinks="pf148926851775211 pf148927125165318 pf14899256157757 pf14899256157758 pf14899256157759" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/opciones.xhtml" id="pf148926851775213" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" outlinks="pf148926851775214 pf14894840522430 pf14894840665161" inlinks="pf14892685177529 pf14894840522430 pf14894840665161" path="/admin/opciones.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="user/opciones.xhtml" id="pf148926851775216" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf148927125165318 pf148927131478421 pf148927131478422" inlinks="pf148926851775210" path="/user/opciones.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/listado.xhtml" id="pf148926851775217" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf148926851775214" path="/admin/listado.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="user/listado.xhtml" id="pf148927131478423" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf148927131478421" path="/user/listado.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="user/altaTarea.xhtml" id="pf148927131478424" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf148927131478422" path="/user/altaTarea.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/listado.xhtml" id="pf148927131478423" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf148992561577511 pf148992561577512 pf148992561577513 pf14899256157759" inlinks="pf148927131478421 pf148992561577514 pf148992561577515 pf148992561577513" path="/user/listado.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/altaTarea.xhtml" id="pf148927131478424" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" outlinks="pf148992561577514 pf14899256157757" inlinks="pf148927131478422 pf148992561577512" path="/user/altaTarea.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="user/editTarea.xhtml" id="pf14899250701356" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf148992561577515 pf14899256157758" inlinks="pf148992561577511" path="/user/editTarea.xhtml"/>
   <links id="pf14892685177529" target="pf148926851775213" source="pf14892685177528" outcome="exitoAdministrador" redirect="true" fromaction="#{login.verify}"/>
   <links id="pf148926851775210" target="pf148926851775216" source="pf14892685177528" outcome="exitoUser" redirect="true" fromaction="#{login.verify}"/>
   <links id="pf148926851775211" target="pf14892685177528" source="pf14892685177528" outcome="fallo"/>
@@ -13,6 +14,14 @@
   <links id="pf148927125165318" target="pf14892685177528" source="pf148926851775216" outcome="fallo"/>
   <links id="pf148927131478421" target="pf148927131478423" source="pf148926851775216" outcome="exito" fromaction="#{controller.listadoTareas}"/>
   <links id="pf148927131478422" target="pf148927131478424" source="pf148926851775216" outcome="exito" fromaction="#{controller.addTarea}"/>
-  <links id="pf14894840522430" target="pf148926851775213" source="pf148926851775213" outcome="fallo"/>
-  <links id="pf14894840665161" target="pf148926851775213" source="pf148926851775213" outcome="exito" fromaction="#{controller.reiniciar()}"/>
+  <links id="pf14894840522430" target="pf148926851775213" source="pf148926851775213" outcome="exito" fromaction="#{controller.reiniciar()}"/>
+  <links id="pf14894840665161" target="pf148926851775213" source="pf148926851775213" outcome="fallo"/>
+  <links id="pf148992561577514" target="pf148927131478423" source="pf148927131478424" outcome="exito" fromaction="#{task.add}"/>
+  <links id="pf14899256157757" target="pf14892685177528" source="pf148927131478424" outcome="fallo"/>
+  <links id="pf148992561577515" target="pf148927131478423" source="pf14899250701356" outcome="exito" fromaction="#{task.edit}"/>
+  <links id="pf14899256157758" target="pf14892685177528" source="pf14899250701356" outcome="fallo"/>
+  <links id="pf148992561577511" target="pf14899250701356" source="pf148927131478423" outcome="exito" fromaction="#{task.establecer(vtask)}"/>
+  <links id="pf148992561577512" target="pf148927131478424" source="pf148927131478423" outcome="exito" fromaction="#{controller.addTarea}"/>
+  <links id="pf148992561577513" target="pf148927131478423" source="pf148927131478423" outcome="exito" fromaction="#{controller.listadoTareas}"/>
+  <links id="pf14899256157759" target="pf14892685177528" source="pf148927131478423" outcome="fallo"/>
 </pageflow:Pageflow>
