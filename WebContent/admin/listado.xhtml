@@ -10,19 +10,19 @@
   </ui:define>
 
 	<ui:define name="cuerpo">
-		<h:form>
+		<h:form id="listado_form">
 			<p:panel header="#{msgs.tituloOperacionListadoAdmin}">
 				<p:dataTable var="vuser" value="#{controller.users}" border="1"
 					id="user-table">
-					<p:column sortBy="#{vuser.id}">
+					<p:column sortBy="#{vuser.id}" id="order_id">
 						<f:facet name="header">#{msgs.tablaId}</f:facet>#{vuser.id}</p:column>
-					<p:column sortBy="#{vuser.login}">
+					<p:column sortBy="#{vuser.login}" id="order_login">
 						<f:facet name="header">#{msgs.tablaLogin}</f:facet>#{vuser.login}</p:column>
-					<p:column sortBy="#{vuser.email}">
+					<p:column sortBy="#{vuser.email}" id="order_email">
 						<f:facet name="header">#{msgs.tablaEmail}</f:facet>#{vuser.email}</p:column>
-					<p:column sortBy="#{vuser.status}">
+					<p:column sortBy="#{vuser.status}" id="order_status">
 						<f:facet name="header">#{msgs.tablaStatus}</f:facet>#{vuser.status}</p:column>
-					<p:column>
+					<p:column id="boton_desactivar">
 						<f:facet name="header">#{msgs.tablaDesactivar}</f:facet>
 						<p:commandLink action="#{controller.deactivate(vuser)}"
 							type="submit" value="#{msgs.tablaDesactivar}" immediate="true"
@@ -33,7 +33,7 @@
 							update="user-table" rendered="#{!vuser.enabled}">
 						</p:commandLink>
 					</p:column>
-					<p:column>
+					<p:column  id="boton_baja">
 						<f:facet name="header">#{msgs.tablaDel}</f:facet>
 						<p:commandLink type="submit" value="#{msgs.tablaDel}"
 							immediate="true" action="#{controller.baja(vuser)}"

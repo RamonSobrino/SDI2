@@ -28,26 +28,27 @@ public class BeanTask implements Serializable {
 	private Date planned;
 	private Date finished;
 	
-	private Category category;
+	private Long category;
 	
 	private Task task;
 	@ManagedProperty(value = "#{controller}")
 	private BeanUsers bean;
 	
-	public Category getCategory() {
+	public Long getCategory() {
 		return category;
 	}
-	public void setCategory(Category category) {
+	public void setCategory(Long category) {
 		this.category = category;
 	}
-	public void setCategory(Long id) {
+	
+	/*public void setCategory(Long id) {
 		for (Category cat : categorias) {
 			if(cat.getId() == id){
 				this.category =  cat;
 				break;
 			}
 		}
-	}
+	}*/
 
 	private List<Category> categorias;
 	
@@ -78,13 +79,20 @@ public class BeanTask implements Serializable {
 			task.setTitle(tittle);
 			task.setComments(comments);
 			if(category!=null)
-			task.setCategoryId(category.getId());
+			task.setCategoryId(category);
 			task.setPlanned(planned);
 			task.setFinished(finished);
 			task.setUserId(user.getId());
 			
 			
-			service.createTask(task);
+			if(service.findTaskById(id)==null)
+				service.createTask(task);
+			else
+			{
+				task.setId(id);
+				service.updateTask(task);
+			}		
+			this.resetCampos();
 			
 			bean.listadoTareas();
 			return "exito"; // Nos vamos a la vista listado.xhtml
@@ -113,7 +121,7 @@ public class BeanTask implements Serializable {
 			task.setTitle(tittle);
 			task.setComments(comments);
 			if(category!=null)
-			task.setCategoryId(category.getId());
+			task.setCategoryId(category);
 			task.setPlanned(planned);
 			task.setFinished(finished);
 			task.setUserId(user.getId());		
@@ -217,11 +225,7 @@ public class BeanTask implements Serializable {
 		try {
 		this.task= vtask;
 		this.tittle=this.task.getTitle();
-		for(Category cat : this.getCategorias())
-		{
-			if(cat.getId()==this.task.getCategoryId())
-				this.category =cat;
-		}
+		this.category = vtask.getCategoryId();
 		id= task.getId();
 		planned = task.getPlanned();
 		finished = task.getFinished();

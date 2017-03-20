@@ -31,9 +31,9 @@
                          rowsPerPageTemplate="8">
 					<p:column sortBy ="#{vtask.id}">
 						<f:facet name="header">#{msgs.tablaId}</f:facet>#{vtask.id}</p:column>
-					<p:column sortBy ="#{vtask.title}">
+					<p:column sortBy ="#{vtask.title}" filterBy="#{vtask.title}"  filterMatchMode="contains">
 						<f:facet name="header">#{msgs.tablaTitle}</f:facet>#{vtask.title}</p:column>
-					<p:column sortBy = "#{vtask.category}">
+					<p:column sortBy = "#{vtask.categoryId}">
 						<f:facet name="header">#{msgs.tablaCategory}</f:facet>#{vtask.categoryId}</p:column>
 					<p:column sortBy ="#{vtask.created}">
 						<f:facet name="header">#{msgs.tablaCreated}</f:facet>#{vtask.created}</p:column>
