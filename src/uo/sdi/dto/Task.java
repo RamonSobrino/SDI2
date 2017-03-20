@@ -12,82 +12,90 @@ public class Task implements Comparable<Task>{
 	private Date created = DateUtil.today();
 	private Date planned;
 	private Date finished;
-	
+
 	private Long categoryId;
 	private Long userId;
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public Task setId(Long id) {
 		this.id = id;
 		return this;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public Task setTitle(String title) {
 		this.title = title;
 		return this;
 	}
-	
+
 	public String getComments() {
 		return comments;
 	}
-	
+
 	public Task setComments(String comments) {
 		this.comments = comments;
 		return this;
 	}
-	
+
 	public Date getCreated() {
 		return created;
 	}
-	
+
 	public Task setCreated(Date created) {
 		this.created = created;
 		return this;
 	}
-	
+
 	public Date getPlanned() {
 		return planned;
 	}
-	
+
 	public Task setPlanned(Date planned) {
 		this.planned = planned;
 		return this;
 	}
-	
+
 	public Date getFinished() {
 		return finished;
 	}
-	
+
 	public Task setFinished(Date finished) {
 		this.finished = finished;
 		return this;
 	}
-	
+
 	public Long getCategoryId() {
 		return categoryId;
 	}
-	
+
 	public Task setCategoryId(Long category_id) {
 		this.categoryId = category_id;
 		return this;
 	}
-	
+
 	public Long getUserId() {
 		return userId;
 	}
-	
+
 	public Task setUserId(Long user_id) {
 		this.userId = user_id;
 		return this;
 	}
-	
+
+	public boolean isLate(){
+		if(planned != null){
+			return planned.before(new Date());
+		}else{
+			return false;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "TaskDto [id=" + id 

@@ -83,8 +83,9 @@ public class BeanLogin implements Serializable {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					bundle.getString("error"), e.getMessage()));
 			e.printStackTrace();
+			return "fallo"; //Volvemos a register
 		}
-		return "error";
+		return "exito"; //Nos vamos a index
 	}
 
 	private void putUserInSession(User user) {

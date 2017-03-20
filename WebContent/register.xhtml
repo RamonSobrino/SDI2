@@ -9,10 +9,7 @@
     #{msgs.register_title}
   </ui:define>
 	<ui:define name="cuerpo">
-		<h:form id="form-principal">
-			<!-- Mensajes -->
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
+		<h:form id="form-register">
 			<!-- Grid con formulario -->
 			<p:panelGrid id="Grid" columns="2" cellpadding="5">
 
@@ -45,7 +42,7 @@
 					</p:password>
 				</h:panelGroup>
 
-				<p:commandButton value="#{msgs.botonRegister}"
+				<p:commandButton id="register" value="#{msgs.botonRegister}"
 					action="#{login.register}" update="Grid" process="@form">
 				</p:commandButton>
 			</p:panelGrid>

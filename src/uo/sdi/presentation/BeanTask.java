@@ -11,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import alb.util.log.Log;
 import uo.sdi.business.Services;
 import uo.sdi.business.TaskService;
 import uo.sdi.dto.Category;
@@ -27,36 +28,36 @@ public class BeanTask implements Serializable {
 
 	private Date planned;
 	private Date finished;
-	
+
 	private Long category;
-	
+
 	private Task task;
 	@ManagedProperty(value = "#{controller}")
 	private BeanUsers bean;
-	
+
 	public Long getCategory() {
 		return category;
 	}
+
 	public void setCategory(Long category) {
 		this.category = category;
 	}
-	
-	/*public void setCategory(Long id) {
-		for (Category cat : categorias) {
-			if(cat.getId() == id){
-				this.category =  cat;
-				break;
-			}
-		}
-	}*/
+
+	/*
+	 * public void setCategory(Long id) { for (Category cat : categorias) {
+	 * if(cat.getId() == id){ this.category = cat; break; } } }
+	 */
 
 	private List<Category> categorias;
-	
-	 @PostConstruct
-	    public void init() {
-		 this.listaCategory();
-		bean= (BeanUsers) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(new String("controller"));
-	 }
+
+	@PostConstruct
+	public void init() {
+		this.listaCategory();
+		bean = (BeanUsers) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap()
+				.get(new String("controller"));
+	}
+
 	public BeanTask() {
 		System.out.println("BeanLogin - No existia");
 	}
@@ -78,32 +79,35 @@ public class BeanTask implements Serializable {
 			this.task = new Task();
 			task.setTitle(tittle);
 			task.setComments(comments);
-			if(category!=null)
-			task.setCategoryId(category);
+			if (category != null)
+				task.setCategoryId(category);
 			task.setPlanned(planned);
 			task.setFinished(finished);
 			task.setUserId(user.getId());
-			
-			
-			if(service.findTaskById(id)==null)
+
+			if (service.findTaskById(id) == null)
 				service.createTask(task);
-			else
-			{
+			else {
 				task.setId(id);
 				service.updateTask(task);
-			}		
-			this.resetCampos();
+			}
 			
-			bean.listadoTareas();
+			if (category == null) {
+				bean.listadoTareas();
+			} else if (planned.after(new Date())) {
+				bean.listadoSemana();
+			} else {
+				bean.listadoSemana();
+			}
+			this.resetCampos();
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error"; // Nos vamos la vista de error
 		}
-		
-	}
 
+	}
 
 	public String edit() {
 		TaskService service;
@@ -120,16 +124,16 @@ public class BeanTask implements Serializable {
 			this.task = new Task();
 			task.setTitle(tittle);
 			task.setComments(comments);
-			if(category!=null)
-			task.setCategoryId(category);
+			if (category != null)
+				task.setCategoryId(category);
 			task.setPlanned(planned);
 			task.setFinished(finished);
-			task.setUserId(user.getId());		
+			task.setUserId(user.getId());
 			task.setId(id);
 			service.updateTask(task);
-			
+
 			bean.listadoTareas();
-			
+
 			this.resetCampos();
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
@@ -137,19 +141,19 @@ public class BeanTask implements Serializable {
 			e.printStackTrace();
 			return "error"; // Nos vamos la vista de error
 		}
-		
+
 	}
-	private void resetCampos()
-	{
-		this.id=null;
-		this.tittle="";
-		this.comments="";
-		this.planned=null;
-		this.finished=null;
-		this.category=null;
+
+	private void resetCampos() {
+		this.id = null;
+		this.tittle = "";
+		this.comments = "";
+		this.planned = null;
+		this.finished = null;
+		this.category = null;
 	}
-	public String listaCategory()
-	{
+
+	public String listaCategory() {
 		TaskService service;
 		try {
 			// Acceso a la implementacion de la capa de negocio
@@ -163,7 +167,7 @@ public class BeanTask implements Serializable {
 					.getSession(false);
 			User user = (User) session.getAttribute("LOGGEDIN_USER");
 
-			this.categorias = 	service.findCategoriesByUserId(user.getId());			
+			this.categorias = service.findCategoriesByUserId(user.getId());
 
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
@@ -172,7 +176,6 @@ public class BeanTask implements Serializable {
 			return "error"; // Nos vamos la vista de error
 		}
 	}
-
 
 	public String getTittle() {
 		return tittle;
@@ -213,28 +216,29 @@ public class BeanTask implements Serializable {
 	public void setCategorias(List<Category> categorias) {
 		this.categorias = categorias;
 	}
+
 	public Task getTask() {
 		return task;
 	}
+
 	public void setTask(Task task) {
 		this.task = task;
 	}
-	
-	public String establecer(Task vtask)
-	{
+
+	public String establecer(Task vtask) {
 		try {
-		this.task= vtask;
-		this.tittle=this.task.getTitle();
-		this.category = vtask.getCategoryId();
-		id= task.getId();
-		planned = task.getPlanned();
-		finished = task.getFinished();
-		return "exito";
-		}catch (Exception e) {
+			this.task = vtask;
+			this.tittle = this.task.getTitle();
+			this.category = vtask.getCategoryId();
+			id = task.getId();
+			planned = task.getPlanned();
+			finished = task.getFinished();
+			return "exito";
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "error"; // Nos vamos la vista de error
 		}
-		
+
 	}
-	
+
 }

@@ -115,6 +115,9 @@ public class BeanUsers implements Serializable {
 
 	}
 
+	/*
+	 * Listado Inbox
+	 */
 	public String listadoTareas() {
 		TaskService service;
 		try {
