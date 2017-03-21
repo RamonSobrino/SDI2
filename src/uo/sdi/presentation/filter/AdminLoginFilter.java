@@ -59,8 +59,6 @@ public class AdminLoginFilter implements Filter {
 
 		User user = (User) session.getAttribute("LOGGEDIN_USER");
 
-		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
-
 		if (user == null) {
 			String loginForm = config.getInitParameter("LoginParam");
 			/*FacesContext.getCurrentInstance().addMessage(
@@ -73,7 +71,7 @@ public class AdminLoginFilter implements Filter {
 		} else {
 			if (!user.getIsAdmin()) {
 				// TODO: Decidir a donde se redirecciona
-				res.sendRedirect(req.getContextPath() + "/login.xhtml");
+				res.sendRedirect(req.getContextPath() + "/index.xhtml");
 				return;
 			}
 		}

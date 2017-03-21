@@ -12,15 +12,15 @@
 	<ui:define name="cuerpo">
 		<div class="ui-g">
 			<div class="ui-g-4">
-				<p:commandButton action="#{controller.reiniciar()}"
+				<p:commandButton id="restartdb" action="#{controller.reiniciar()}"
 					value="#{msgs.init_db}"></p:commandButton>
 			</div>
 			<div class="ui-g-4">
-				<p:commandButton action="#{controller.listado()}"
+				<p:commandButton id="listUser" action="#{controller.listado()}"
 					value="#{msgs.listUser}"></p:commandButton>
 			</div>
 			<div class="ui-g-4">
-				<p:commandButton value="#{msgs.cerrar_sesion}" action="/index.xhtml"></p:commandButton>
+				<p:commandButton id="logout" value="#{msgs.cerrar_sesion}" action="/index.xhtml"></p:commandButton>
 			</div>
 		</div>
 

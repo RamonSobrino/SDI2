@@ -68,7 +68,7 @@ public class UserLoginFilter implements Filter {
 		}else{
 			if(user.getIsAdmin()){
 				//TODO: Decidir a donde se redirecciona
-				res.sendRedirect(req.getContextPath() + "/login.xhtml");
+				res.sendRedirect(req.getContextPath() + "/index.xhtml");
 				return;
 			}
 		}

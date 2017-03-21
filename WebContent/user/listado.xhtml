@@ -28,6 +28,7 @@
 			<p:panel header="#{msgs.tituloOperacionListadoUser}">
 				<p:dataTable var="vtask" value="#{controller.tasks}" border="1" rows="8" paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{currentPage} #{msgs.of} {totalPages}"
                          rowsPerPageTemplate="8">
 					<p:column sortBy ="#{vtask.id}">
 						<f:facet name="header">#{msgs.tablaId}</f:facet>#{vtask.id}</p:column>
