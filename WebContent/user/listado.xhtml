@@ -6,8 +6,12 @@
 	 template="/templates/template-user.xhtml">
 
 	<ui:define name="titulo">
-    #{msgs.tituloOperacionListadoUser}
-  </ui:define>
+   
+    <h:outputText rendered ="#{controller.inboxFlag}" value=" #{msgs.tituloOperacionListadoUserInbox}"/>
+    <h:outputText rendered ="#{controller.semanaFlag}" value="#{msgs.tituloOperacionListadoUserSemana}"/>
+    <h:outputText rendered ="#{controller.diaFlag}" value="#{msgs.tituloOperacionListadoUserDia}"/>
+  	
+  	</ui:define>
 
 	<ui:define name="cuerpo">
 		<div class="ui-g">
@@ -33,15 +37,23 @@
 					<p:column sortBy ="#{vtask.id}">
 						<f:facet name="header">#{msgs.tablaId}</f:facet>#{vtask.id}</p:column>
 					<p:column sortBy ="#{vtask.title}" filterBy="#{vtask.title}"  filterMatchMode="contains">
-						<f:facet name="header">#{msgs.tablaTitle}</f:facet><h:outputText style="#{vtask.late?'color:red':''}" value="#{vtask.title}"></h:outputText></p:column>
+						<f:facet name="header">#{msgs.tablaTitle}</f:facet>
+								<h:outputText value="#{vtask.title}"/>
+						</p:column>
 					<p:column sortBy = "#{vtask.categoryId}">
-						<f:facet name="header">#{msgs.tablaCategory}</f:facet>#{vtask.categoryId}</p:column>
+						<f:facet name="header">#{msgs.tablaCategory}</f:facet>
+								<h:outputText style="color:red" rendered ="#{vtask.late and controller.colorCategoria}" value="#{vtask.categoryId}"/>
+								<h:outputText rendered ="#{!(vtask.late and controller.colorCategoria)}" value="#{vtask.categoryId}"/>
+						</p:column>
 					<p:column sortBy ="#{vtask.created}">
 						<f:facet name="header">#{msgs.tablaCreated}</f:facet>#{vtask.created}</p:column>
 					<p:column sortBy = "#{vtask.finished}">
 						<f:facet name="header">#{msgs.tablaFinished}</f:facet>#{vtask.finished}</p:column>
 					<p:column sortBy = "#{vtask.planned}">
-						<f:facet name="header">#{msgs.tablaPlanned}</f:facet>#{vtask.planned}</p:column>
+						<f:facet name="header">#{msgs.tablaPlanned}</f:facet>
+								<h:outputText style="color:red" rendered ="#{vtask.late and controller.colorFecha}" value="#{vtask.planned}"/>
+								<h:outputText rendered ="#{!(vtask.late and controller.colorFecha)}" value="#{vtask.planned}"/>
+						</p:column>
 					<p:column>
 						<f:facet name="header">#{msgs.tablaEdit}</f:facet>
 						<p:commandLink  type="submit"

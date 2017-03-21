@@ -41,6 +41,8 @@ public class BeanUsers implements Serializable {
 	private List<User> users = null;
 	// private Task[] tasks =null;
 	private List<Task> tasks = null;
+	
+	private String tipoListado;
 
 	/*
 	 * public Task[] getTasks() { return tasks; }
@@ -48,6 +50,68 @@ public class BeanUsers implements Serializable {
 	 * public void setTasks(Task[] tasks) { this.tasks = tasks; }
 	 */
 
+	private boolean inboxFlag;
+	private boolean semanaFlag;
+	private boolean diaFlag;
+
+
+	public boolean getInboxFlag() {
+		return this.tipoListado.equals("Inbox");
+	}
+
+	public void setInboxFlag(boolean inboxFlag) {
+		this.inboxFlag = inboxFlag;
+	}
+ 
+	public boolean getSemanaFlag() {
+		return this.tipoListado.equals("Semana");
+	}
+
+	public void setSemanaFlag(boolean semanaFlag) {
+		this.semanaFlag = semanaFlag;
+	}
+
+	public boolean getDiaFlag() {
+		return this.tipoListado.equals("Dia");
+	}
+
+	public void setDiaFlag(boolean diaFlag) {
+		this.diaFlag = diaFlag;
+	}
+	
+	private boolean colorFecha;
+	private boolean colorCategoria;
+	
+	
+	public boolean getColorFecha() {
+		return rojoFecha();
+	}
+
+	public void setColorFecha(boolean colorFecha) {
+		this.colorFecha = colorFecha;
+	}
+	
+	public boolean getColorCategoria() {
+		return rojoCategoria();
+	}
+
+	public void setColorCategoria(boolean colorCategoria) {
+		this.colorFecha = colorCategoria;
+	}
+	
+	
+
+	public boolean rojoFecha()
+	{
+		return this.tipoListado.equals("Inbox")
+				||this.tipoListado.equals("Dia");
+	}
+	
+	public boolean rojoCategoria()
+	{
+		return this.tipoListado.equals("Semana");
+	}
+	
 	public BeanUser getUser() {
 		return user;
 	}
@@ -135,6 +199,7 @@ public class BeanUsers implements Serializable {
 			List<Task> lista = service.findInboxTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
+			this.tipoListado="Inbox";
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -161,6 +226,7 @@ public class BeanUsers implements Serializable {
 			List<Task> lista = service.findWeekTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
+			this.tipoListado="Semana";
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -185,6 +251,8 @@ public class BeanUsers implements Serializable {
 
 			List<Task> lista = service.findTodayTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+
+			this.tipoListado="Dia";
 
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
