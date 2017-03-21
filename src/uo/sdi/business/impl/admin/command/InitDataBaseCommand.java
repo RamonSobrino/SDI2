@@ -28,6 +28,7 @@ public class InitDataBaseCommand implements Command<Void> {
 		
 		for(User us: listaAnti)
 		{
+			if(!us.getIsAdmin())
 			adminServices.deepDeleteUser(us.getId());
 		}
 		
@@ -36,13 +37,13 @@ public class InitDataBaseCommand implements Command<Void> {
 		
 		
 		
-		String[] userLogin ={"admin1","user1","user2","user3"};
-		String[] userPassword ={"admin1","user1","user2","user3"};
-		String[] userMail ={"admin1@admin.com","user1@user.com","user2@user.com","user3@user.com"};
-		boolean[] userIsAdmin={true,false,false,false};
+		String[] userLogin ={"user1","user2","user3"};
+		String[] userPassword ={"user1","user2","user3"};
+		String[] userMail ={"user1@user.com","user2@user.com","user3@user.com"};
+		boolean[] userIsAdmin={false,false,false};
 		
 		
-		for(int i = 0;i<4;i++)
+		for(int i = 0;i<userLogin.length;i++)
 		{
 			User u = new User();
 			u.setLogin(userLogin[i]);
