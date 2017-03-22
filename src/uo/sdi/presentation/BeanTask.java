@@ -97,7 +97,7 @@ public class BeanTask implements Serializable {
 			} else if (planned.after(new Date())) {
 				bean.listadoSemana();
 			} else {
-				bean.listadoSemana();
+				bean.listadoDia();
 			}
 			this.resetCampos();
 			return "exito"; // Nos vamos a la vista listado.xhtml

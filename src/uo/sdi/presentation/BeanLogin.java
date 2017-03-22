@@ -92,7 +92,7 @@ public class BeanLogin implements Serializable {
 		putUserOutOfSession();
 		FacesContext cont = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("success"), "success_logout");
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("success"), bundle.getString("success_logout"));
 		cont.addMessage(null, msg);
 		return "exito";
 	}
