@@ -51,6 +51,7 @@ public class BeanUsers implements Serializable {
 	 */
 
 	private boolean inboxFlag;
+	private boolean inboxFinalizados=false;
 	private boolean semanaFlag;
 	private boolean diaFlag;
 
@@ -197,6 +198,11 @@ public class BeanUsers implements Serializable {
 			User user = (User) session.getAttribute("LOGGEDIN_USER");
 
 			List<Task> lista = service.findInboxTasksByUserId(user.getId());
+			if(this.inboxFinalizados)
+			{
+				lista.addAll(service.findFinishedInboxTasksByUserId(user.getId()));
+			}
+			
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado="Inbox";
@@ -205,6 +211,18 @@ public class BeanUsers implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error"; // Nos vamos la vista de error
+		}
+
+	}
+	
+	public void checkListado() {
+		try {
+			//this.inboxFinalizados=true;
+			 this.listadoTareas();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+				// Nos vamos la vista de error
 		}
 
 	}
@@ -262,6 +280,14 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
+	public boolean isInboxFinalizados() {
+		return inboxFinalizados;
+	}
+
+	public void setInboxFinalizados(boolean inboxFinalizados) {
+		this.inboxFinalizados = inboxFinalizados;
+	}
+
 	public String baja(User vuser) {
 		AdminService service;
 		try {
