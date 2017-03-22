@@ -41,7 +41,7 @@ public class BeanUsers implements Serializable {
 	private List<User> users = null;
 	// private Task[] tasks =null;
 	private List<Task> tasks = null;
-	
+
 	private String tipoListado;
 
 	/*
@@ -54,7 +54,6 @@ public class BeanUsers implements Serializable {
 	private boolean semanaFlag;
 	private boolean diaFlag;
 
-
 	public boolean getInboxFlag() {
 		return this.tipoListado.equals("Inbox");
 	}
@@ -62,7 +61,7 @@ public class BeanUsers implements Serializable {
 	public void setInboxFlag(boolean inboxFlag) {
 		this.inboxFlag = inboxFlag;
 	}
- 
+
 	public boolean getSemanaFlag() {
 		return this.tipoListado.equals("Semana");
 	}
@@ -78,11 +77,10 @@ public class BeanUsers implements Serializable {
 	public void setDiaFlag(boolean diaFlag) {
 		this.diaFlag = diaFlag;
 	}
-	
+
 	private boolean colorFecha;
 	private boolean colorCategoria;
-	
-	
+
 	public boolean getColorFecha() {
 		return rojoFecha();
 	}
@@ -90,7 +88,7 @@ public class BeanUsers implements Serializable {
 	public void setColorFecha(boolean colorFecha) {
 		this.colorFecha = colorFecha;
 	}
-	
+
 	public boolean getColorCategoria() {
 		return rojoCategoria();
 	}
@@ -98,20 +96,16 @@ public class BeanUsers implements Serializable {
 	public void setColorCategoria(boolean colorCategoria) {
 		this.colorFecha = colorCategoria;
 	}
-	
-	
 
-	public boolean rojoFecha()
-	{
+	public boolean rojoFecha() {
 		return this.tipoListado.equals("Inbox")
-				||this.tipoListado.equals("Dia");
+				|| this.tipoListado.equals("Dia");
 	}
-	
-	public boolean rojoCategoria()
-	{
+
+	public boolean rojoCategoria() {
 		return this.tipoListado.equals("Semana");
 	}
-	
+
 	public BeanUser getUser() {
 		return user;
 	}
@@ -199,7 +193,7 @@ public class BeanUsers implements Serializable {
 			List<Task> lista = service.findInboxTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
-			this.tipoListado="Inbox";
+			this.tipoListado = "Inbox";
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -226,7 +220,7 @@ public class BeanUsers implements Serializable {
 			List<Task> lista = service.findWeekTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
-			this.tipoListado="Semana";
+			this.tipoListado = "Semana";
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
@@ -235,6 +229,7 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
+
 	public String listadoDia() {
 		TaskService service;
 		try {
@@ -252,7 +247,7 @@ public class BeanUsers implements Serializable {
 			List<Task> lista = service.findTodayTasksByUserId(user.getId());
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
-			this.tipoListado="Dia";
+			this.tipoListado = "Dia";
 
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
@@ -262,8 +257,11 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
+
 	public String baja(User vuser) {
 		AdminService service;
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		FacesContext cont = FacesContext.getCurrentInstance();
 		try {
 			// Acceso a la implementacion de la capa de negocio
 			// a trav��s de la factor��a
@@ -272,11 +270,18 @@ public class BeanUsers implements Serializable {
 			service.deepDeleteUser(vuser.getId());
 			// Actualizamos el javabean de Users inyectado en la tabla.
 			// users = (User[]) service.findAllUsers().toArray(new User[0]);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+					bundle.getString("success"),
+					bundle.getString("success_delete_user"));
+			cont.addMessage(null, msg);
 			users = service.findAllUsers();
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					bundle.getString("error"),
+					bundle.getString("error_delete_user"));
+			cont.addMessage(null, msg);
 			return "error"; // Nos vamos a la vista de error
 		}
 
@@ -323,8 +328,6 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
-	
-	
 
 	public String edit() {
 		UserService service;
@@ -343,9 +346,8 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
-	
-	public String delete(Task vtask)
-	{
+
+	public String delete(Task vtask) {
 		TaskService service;
 		try {
 			// Acceso a la implementacion de la capa de negocio
@@ -353,7 +355,7 @@ public class BeanUsers implements Serializable {
 			service = Services.getTaskService();
 			// Eliminamos la Task seleccionado en la tabla
 			service.deleteTask(vtask.getId());
-		
+
 			this.listadoTareas();
 			return "exito"; // Nos vamos a la vista de listado.
 
@@ -418,9 +420,8 @@ public class BeanUsers implements Serializable {
 	public String login() {
 		return "exito";
 	}
-	
-	public String addTarea()
-	{
+
+	public String addTarea() {
 		return "exito";
 	}
 
