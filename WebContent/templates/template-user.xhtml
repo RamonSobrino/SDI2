@@ -18,11 +18,10 @@
 					id="MenuOpciones">
 					<p:menuitem value="#{msgs.add_tarea}"
 						action="#{controller.addTarea}" id="addTarea" />
-					<p:separator />
 					<p:menuitem value="#{msgs.list_tareas}"
 						action="#{controller.listadoTareas}" id="listar" />
 					<p:separator />
-					<p:menuitem value="#{msgs.cerrar_sesion}" action="/index.xhtml"
+					<p:menuitem value="#{msgs.cerrar_sesion}" action="#{login.logout}"
 						id="cerrar" />
 				</p:submenu>
 

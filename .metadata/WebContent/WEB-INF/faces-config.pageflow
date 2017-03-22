@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/sdi2-16/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="168" y="120" id="pf14892685177528" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf14892685177529 pf148926851775210 pf148926851775211" inlinks="pf148926851775211 pf14900346022490 pf14900346022491 pf14900346022492 pf14900346022493 pf149003725179125" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="168" y="120" id="pf14892685177528" referenceLink="//@navigationRule.6/@navigationCase.1/@toViewId|" outlinks="pf14892685177529 pf148926851775210 pf148926851775211" inlinks="pf148926851775211 pf14900346022490 pf14900346022491 pf14900346022492 pf14900346022493 pf149003725179125" path="/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/opciones.xhtml" x="816" y="108" id="pf148926851775213" referenceLink="//@navigationRule.2/@navigationCase.2/@toViewId|" outlinks="pf14900346022494 pf14900346022495 pf14900346022496" inlinks="pf14892685177529 pf14900346022495 pf14900346022496" path="/admin/opciones.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="user/opciones.xhtml" x="348" y="312" id="pf148926851775216" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14900346022497 pf14900346022498 pf14900346022490" inlinks="pf148926851775210" path="/user/opciones.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/listado.xhtml" id="pf14900346022499" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14900346022494" path="/admin/listado.xhtml"/>
@@ -8,6 +8,9 @@
   <nodes xsi:type="pageflow:PFPage" name="user/altaTarea.xhtml" id="pf149003460224918" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf149003460224914 pf14900346022492 pf149003460224915" inlinks="pf14900346022498 pf149003460224912" path="/user/altaTarea.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="user/editTarea.xhtml" id="pf149003460224919" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf149003460224916 pf14900346022493 pf149003460224917" inlinks="pf149003460224911" path="/user/editTarea.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="register.xhtml" id="pf149003467230724" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" outlinks="pf149003725179125 pf149003725179126" inlinks="pf149003725179126" path="/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14902065354850" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf14902065354851 pf14902065906133" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="error" id="pf14902065354852" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf14902065354851" path="error"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf14902065906134" referenceLink="//@navigationRule.7/@navigationCase.1/@toViewId|" inlinks="pf14902065906133" path="index.xhtml"/>
   <links id="pf14892685177529" target="pf148926851775213" source="pf14892685177528" outcome="exitoAdministrador" redirect="true" fromaction="#{login.verify}"/>
   <links id="pf148926851775210" target="pf148926851775216" source="pf14892685177528" outcome="exitoUser" redirect="true" fromaction="#{login.verify}"/>
   <links id="pf148926851775211" target="pf14892685177528" source="pf14892685177528" outcome="fallo"/>
@@ -29,4 +32,6 @@
   <links id="pf149003460224917" target="pf149003460224910" source="pf149003460224919" outcome="exito" fromaction="#{controller.listadoTareas}"/>
   <links id="pf149003725179125" target="pf14892685177528" source="pf149003467230724" outcome="exito" fromaction="#{login.register}"/>
   <links id="pf149003725179126" target="pf149003467230724" source="pf149003467230724" outcome="fallo" fromaction="#{login.register}"/>
+  <links id="pf14902065354851" target="pf14902065354852" source="pf14902065354850" outcome="error"/>
+  <links id="pf14902065906133" target="pf14902065906134" source="pf14902065354850" outcome="exito" fromaction="#{login.logout}"/>
 </pageflow:Pageflow>

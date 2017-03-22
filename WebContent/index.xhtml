@@ -18,7 +18,6 @@
 					<p:inputText value="#{login.name}" required="true" id="login">
 						<f:validateLength minimum="2" />
 					</p:inputText>
-					<p:message for="login" />
 				</h:panelGroup>
 
 
@@ -26,7 +25,6 @@
 				<h:panelGroup>
 					<p:password value="#{login.password}" required="true" id="password">
 					</p:password>
-					<p:message for="password" />
 				</h:panelGroup>
 
 				<p:commandButton value="#{msgs.botonLogin}" action="#{login.verify}"

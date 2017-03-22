@@ -87,11 +87,26 @@ public class BeanLogin implements Serializable {
 		}
 		return "exito"; //Nos vamos a index
 	}
+	
+	public String logout(){
+		putUserOutOfSession();
+		FacesContext cont = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("success"), "success_logout");
+		cont.addMessage(null, msg);
+		return "exito";
+	}
 
 	private void putUserInSession(User user) {
 		Map<String, Object> session = FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap();
 		session.put("LOGGEDIN_USER", user);
+	}
+	
+	private void putUserOutOfSession() {
+		Map<String, Object> session = FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap();
+		session.remove("LOGGEDIN_USER");
 	}
 
 	public String getName() {
