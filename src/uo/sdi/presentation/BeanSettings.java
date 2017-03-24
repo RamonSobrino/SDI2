@@ -22,8 +22,8 @@ public class BeanSettings implements Serializable {
 	private static final Locale SPANISH = new Locale("es");
 
 	// uso de inyección de dependencia
-	//@ManagedProperty(value = "#{user}")
-	//private BeanUser user;
+	// @ManagedProperty(value = "#{user}")
+	// private BeanUser user;
 
 	private Locale locale = new Locale("es");
 
@@ -39,8 +39,8 @@ public class BeanSettings implements Serializable {
 		Log.setLogLevel(LogLevel.DEBUG);
 		// Buscamos el alumno en la sesión. Esto es un patrón factoría
 		// claramente.
-		//FIXME:
-		//user = Factories.beans.createBeanAlumno();
+		// FIXME:
+		// user = Factories.beans.createBeanAlumno();
 	}
 
 	// Es sólo a modo de traza.
@@ -49,20 +49,21 @@ public class BeanSettings implements Serializable {
 		Log.info("BeanSettings - PreDestroy");
 	}
 
-//	public BeanUser getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(BeanUser user) {
-//		this.user = user;
-//	}
+	// public BeanUser getUser() {
+	// return user;
+	// }
+	//
+	// public void setUser(BeanUser user) {
+	// this.user = user;
+	// }
 
 	public Locale getLocale() {
 		// Aqui habria que cambiar algo de código para coger locale del
 		// navegador
 		// la primera vez que se accede a getLocale(), de momento dejamos como
 		// idioma de partida “es”
-		//this.locale = FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+		// this.locale =
+		// FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
 		return (locale);
 	}
 
@@ -70,9 +71,10 @@ public class BeanSettings implements Serializable {
 		locale = SPANISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			/*if (user != null)
-				user.iniciaAlumno(null);*/
-		} catch (Exception ex){
+			/*
+			 * if (user != null) user.iniciaAlumno(null);
+			 */
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -81,9 +83,10 @@ public class BeanSettings implements Serializable {
 		locale = ENGLISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			/*if (user != null)
-				user.iniciaAlumno(null);*/
-		} catch (Exception ex){
+			/*
+			 * if (user != null) user.iniciaAlumno(null);
+			 */
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}

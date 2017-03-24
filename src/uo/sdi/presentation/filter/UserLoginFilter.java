@@ -20,18 +20,12 @@ import uo.sdi.dto.User;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(
-		dispatcherTypes = {DispatcherType.REQUEST }
-		, 
-		urlPatterns = { "/user/*" }, 
-		initParams = { 
-				@WebInitParam(name = "LoginParam", value = "/index.xhtml")
-		})
+@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = { "/user/*" }, initParams = { @WebInitParam(name = "LoginParam", value = "/index.xhtml") })
 public class UserLoginFilter implements Filter {
 	FilterConfig config = null;
 
 	/**
-	 * Default constructor. 
+	 * Default constructor.
 	 */
 	public UserLoginFilter() {
 		// TODO Auto-generated constructor stub
@@ -48,9 +42,9 @@ public class UserLoginFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException{
+			FilterChain chain) throws IOException, ServletException {
 		// Si no es petición HTTP nada que hacer
-		if (!(request instanceof HttpServletRequest)){
+		if (!(request instanceof HttpServletRequest)) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -59,15 +53,15 @@ public class UserLoginFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("LOGGEDIN_USER");
-		//TODO: Encontrar manera de conseguir el RB y poner mensaje de error
-		//ResourceBundle bundle = BundleFactorie.getMessagesBundle();
+		// TODO: Encontrar manera de conseguir el RB y poner mensaje de error
+		// ResourceBundle bundle = BundleFactorie.getMessagesBundle();
 		if (user == null) {
 			String loginForm = config.getInitParameter("LoginParam");
 			res.sendRedirect(req.getContextPath() + loginForm);
 			return;
-		}else{
-			if(user.getIsAdmin()){
-				//TODO: Decidir a donde se redirecciona
+		} else {
+			if (user.getIsAdmin()) {
+				// TODO: Decidir a donde se redirecciona
 				res.sendRedirect(req.getContextPath() + "/index.xhtml");
 				return;
 			}
@@ -80,7 +74,7 @@ public class UserLoginFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		// // TODO Auto-generated method stub
-		//Iniciamos la variable de instancia config
+		// Iniciamos la variable de instancia config
 		config = fConfig;
 	}
 

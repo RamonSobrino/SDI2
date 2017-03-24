@@ -54,7 +54,8 @@ public class BeanLogin implements Serializable {
 			putUserInSession(user);
 
 			if (user.getIsAdmin()) {
-				Log.info("Administrador " + user.getLogin() + " entrado en sesion");
+				Log.info("Administrador " + user.getLogin()
+						+ " entrado en sesion");
 				return "exitoAdministrador";
 			}
 			Log.info("Usuario " + user.getLogin() + " entrado en sesion");
@@ -87,17 +88,18 @@ public class BeanLogin implements Serializable {
 					bundle.getString("error"), e.getMessage()));
 			e.printStackTrace();
 			Log.warn(e.getMessage());
-			return "fallo"; //Volvemos a register
+			return "fallo"; // Volvemos a register
 		}
 		Log.info("Usuario " + name + " registrado");
-		return "exito"; //Nos vamos a index
+		return "exito"; // Nos vamos a index
 	}
-	
-	public String logout(){
+
+	public String logout() {
 		putUserOutOfSession();
 		FacesContext cont = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("success"), bundle.getString("success_logout"));
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				bundle.getString("success"), bundle.getString("success_logout"));
 		cont.addMessage(null, msg);
 		Log.info("Sesion cerrada");
 		return "exito";
@@ -108,7 +110,7 @@ public class BeanLogin implements Serializable {
 				.getExternalContext().getSessionMap();
 		session.put("LOGGEDIN_USER", user);
 	}
-	
+
 	private void putUserOutOfSession() {
 		Map<String, Object> session = FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap();

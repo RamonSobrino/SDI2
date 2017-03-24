@@ -51,9 +51,12 @@ public class BeanUsers implements Serializable {
 	 * public void setTasks(Task[] tasks) { this.tasks = tasks; }
 	 */
 
+	@SuppressWarnings("unused")
 	private boolean inboxFlag;
-	private boolean inboxFinalizados=false;
+	private boolean inboxFinalizados = false;
+	@SuppressWarnings("unused")
 	private boolean semanaFlag;
+	@SuppressWarnings("unused")
 	private boolean diaFlag;
 
 	public boolean getInboxFlag() {
@@ -80,7 +83,9 @@ public class BeanUsers implements Serializable {
 		this.diaFlag = diaFlag;
 	}
 
+	@SuppressWarnings("unused")
 	private boolean colorFecha;
+	@SuppressWarnings("unused")
 	private boolean colorCategoria;
 
 	public boolean getColorFecha() {
@@ -190,11 +195,11 @@ public class BeanUsers implements Serializable {
 			User user = (User) session.getAttribute("LOGGEDIN_USER");
 
 			List<Task> lista = service.findInboxTasksByUserId(user.getId());
-			if(this.inboxFinalizados)
-			{
-				lista.addAll(service.findFinishedInboxTasksByUserId(user.getId()));
+			if (this.inboxFinalizados) {
+				lista.addAll(service.findFinishedInboxTasksByUserId(user
+						.getId()));
 			}
-			
+
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Inbox";
@@ -208,15 +213,15 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
-	
+
 	public void checkListado() {
 		try {
-			//this.inboxFinalizados=true;
-			 this.listadoTareas();
+			// this.inboxFinalizados=true;
+			this.listadoTareas();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-				// Nos vamos la vista de error
+			// Nos vamos la vista de error
 		}
 
 	}
@@ -237,8 +242,8 @@ public class BeanUsers implements Serializable {
 
 			List<Task> lista = service.findWeekTasksByUserId(user.getId());
 			List<Task> lista2 = new ArrayList<>();
-			for(Task task: lista){
-				if(task.getCategoryId()!=null)
+			for (Task task : lista) {
+				if (task.getCategoryId() != null)
 					lista2.add(task);
 			}
 			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
@@ -271,8 +276,8 @@ public class BeanUsers implements Serializable {
 
 			List<Task> lista = service.findTodayTasksByUserId(user.getId());
 			List<Task> lista2 = new ArrayList<>();
-			for(Task task: lista){
-				if(task.getCategoryId()!=null)
+			for (Task task : lista) {
+				if (task.getCategoryId() != null)
 					lista2.add(task);
 			}
 			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
@@ -288,6 +293,7 @@ public class BeanUsers implements Serializable {
 		}
 
 	}
+
 	public boolean isInboxFinalizados() {
 		return inboxFinalizados;
 	}
@@ -295,7 +301,6 @@ public class BeanUsers implements Serializable {
 	public void setInboxFinalizados(boolean inboxFinalizados) {
 		this.inboxFinalizados = inboxFinalizados;
 	}
-
 
 	public String baja(User vuser) {
 		AdminService service;
@@ -314,9 +319,9 @@ public class BeanUsers implements Serializable {
 					bundle.getString("success_delete_user"));
 			cont.addMessage(null, msg);
 			users = service.findAllUsers();
-			
+
 			Log.info("Usuario " + vuser.getLogin() + " eliminado");
-			
+
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {

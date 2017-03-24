@@ -10,13 +10,13 @@ import javax.faces.event.ActionEvent;
 
 import uo.sdi.dto.User;
 
-@ManagedBean(name="user")
+@ManagedBean(name = "user")
 @SessionScoped
 public class BeanUser extends User implements Serializable {
 
 	private static final long serialVersionUID = -4192084276740184132L;
-	
-	public void setUser(User u){
+
+	public void setUser(User u) {
 		setId(u.getId());
 		setLogin(u.getLogin());
 		setPassword(u.getPassword());
@@ -24,11 +24,11 @@ public class BeanUser extends User implements Serializable {
 		setStatus(u.getStatus());
 		setIsAdmin(u.getIsAdmin());
 	}
-	
-	public void initUser(ActionEvent event){
+
+	public void initUser(ActionEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle =
-				facesContext.getApplication().getResourceBundle(facesContext, "msgs");
+		ResourceBundle bundle = facesContext.getApplication()
+				.getResourceBundle(facesContext, "msgs");
 		setId(null);
 		setLogin(bundle.getString("valorDefectoLogin"));
 		setEmail(bundle.getString("valorDefectoEmail"));

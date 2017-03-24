@@ -1,10 +1,6 @@
 package uo.sdi.presentation.filter;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import uo.sdi.dto.User;
-import uo.sdi.infrastructure.BundleFactorie;
 
 /**
  * Servlet Filter implementation class LoginFilter
@@ -61,11 +56,11 @@ public class AdminLoginFilter implements Filter {
 
 		if (user == null) {
 			String loginForm = config.getInitParameter("LoginParam");
-			/*FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
-							.getString("error"), bundle
-							.getString("error_not_logedin")));*/
+			/*
+			 * FacesContext.getCurrentInstance().addMessage( null, new
+			 * FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
+			 * .getString("error"), bundle .getString("error_not_logedin")));
+			 */
 			res.sendRedirect(req.getContextPath() + loginForm);
 			return;
 		} else {
