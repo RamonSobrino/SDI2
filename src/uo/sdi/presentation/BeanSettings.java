@@ -9,6 +9,9 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import alb.util.log.Log;
+import alb.util.log.LogLevel;
+
 @ManagedBean(name = "settings")
 @SessionScoped
 public class BeanSettings implements Serializable {
@@ -32,7 +35,8 @@ public class BeanSettings implements Serializable {
 	// el MBean ya estaba construido y en @PostConstruct SI.
 	@PostConstruct
 	public void init() {
-		System.out.println("BeanSettings - PostConstruct");
+		Log.info("BeanSettings - PostConstruct");
+		Log.setLogLevel(LogLevel.DEBUG);
 		// Buscamos el alumno en la sesión. Esto es un patrón factoría
 		// claramente.
 		//FIXME:
@@ -42,7 +46,7 @@ public class BeanSettings implements Serializable {
 	// Es sólo a modo de traza.
 	@PreDestroy
 	public void end() {
-		System.out.println("BeanSettings - PreDestroy");
+		Log.info("BeanSettings - PreDestroy");
 	}
 
 //	public BeanUser getUser() {

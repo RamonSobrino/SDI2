@@ -99,11 +99,13 @@ public class BeanTask implements Serializable {
 			} else {
 				bean.listadoDia();
 			}
+			Log.info("Tarea " + task.getTitle() + "creada para el usuario " + user.getLogin());
 			this.resetCampos();
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -133,12 +135,13 @@ public class BeanTask implements Serializable {
 			service.updateTask(task);
 
 			bean.listadoTareas();
-
+			Log.info("Tarea " + task.getTitle() + "editada para el usuario " + user.getLogin());
 			this.resetCampos();
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -169,10 +172,12 @@ public class BeanTask implements Serializable {
 
 			this.categorias = service.findCategoriesByUserId(user.getId());
 
+			Log.trace("Cargada lista categorias para usuario " + user.getLogin());
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 	}

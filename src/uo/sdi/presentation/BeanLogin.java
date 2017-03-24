@@ -9,9 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import alb.util.log.Log;
 import uo.sdi.business.LoginService;
 import uo.sdi.business.Services;
-import uo.sdi.business.UserService;
 import uo.sdi.business.exception.BusinessException;
 import uo.sdi.dto.User;
 import uo.sdi.dto.types.UserStatus;
@@ -42,27 +42,30 @@ public class BeanLogin implements Serializable {
 		try {
 			user = login.doLogin(name, password);
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
+							.getString("error"), bundle
+							.getString("login_form_result_error")));
+			Log.error(e.getMessage());
 			return "fallo";
 		}
 		if (user != null) {
 			putUserInSession(user);
 
 			if (user.getIsAdmin()) {
+				Log.info("Administrador " + user.getLogin() + " entrado en sesion");
 				return "exitoAdministrador";
 			}
-
+			Log.info("Usuario " + user.getLogin() + " entrado en sesion");
 			return "exitoUser";
 		}
-		// setResult("login_form_result_error");
-		// XXX: Esto es otra opcion para generar mensajes que me parece que
-		// queda mejor la verdad
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
 						.getString("error"), bundle
 						.getString("login_form_result_error")));
+		Log.warn("Usuario " + name + " no existe o contraseña incorrecta");
 		return "fallo";
 	}
 
@@ -83,8 +86,10 @@ public class BeanLogin implements Serializable {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					bundle.getString("error"), e.getMessage()));
 			e.printStackTrace();
+			Log.warn(e.getMessage());
 			return "fallo"; //Volvemos a register
 		}
+		Log.info("Usuario " + name + " registrado");
 		return "exito"; //Nos vamos a index
 	}
 	
@@ -94,6 +99,7 @@ public class BeanLogin implements Serializable {
 		ResourceBundle bundle = BundleFactorie.getMessagesBundle();
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("success"), bundle.getString("success_logout"));
 		cont.addMessage(null, msg);
+		Log.info("Sesion cerrada");
 		return "exito";
 	}
 

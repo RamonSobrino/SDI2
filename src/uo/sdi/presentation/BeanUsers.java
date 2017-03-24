@@ -12,9 +12,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
+import alb.util.log.Log;
 import uo.sdi.business.AdminService;
 import uo.sdi.business.Services;
 import uo.sdi.business.TaskService;
@@ -140,16 +140,12 @@ public class BeanUsers implements Serializable {
 	// ya estaba construido y en @PostConstruct SI.
 	@PostConstruct
 	public void init() {
-		System.out.println("BeanUsers - PostConstruct");
-		// Buscamos el User en la sesión. Esto es un patrón factoría
-		// claramente.
-		// FIXME:
-		// user = Factories.beans.createBeanUser();
+		Log.trace("BeanUsers - PostConstruct");
 	}
 
 	@PreDestroy
 	public void end() {
-		System.out.println("BeanUsers - PreDestroy");
+		Log.trace("BeanUsers - PreDestroy");
 	}
 
 	public void iniciaUser(ActionEvent event) {
@@ -170,6 +166,7 @@ public class BeanUsers implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -201,10 +198,12 @@ public class BeanUsers implements Serializable {
 			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Inbox";
+			Log.trace("Cargado listado inbox para usuario " + user.getLogin());
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -245,10 +244,12 @@ public class BeanUsers implements Serializable {
 			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Semana";
+			Log.trace("Cargado listado semana para usuario " + user.getLogin());
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -277,11 +278,12 @@ public class BeanUsers implements Serializable {
 			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Dia";
-
+			Log.trace("Cargado listado dia para usuario " + user.getLogin());
 			return "exito"; // Nos vamos a la vista listado.xhtml
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos la vista de error
 		}
 
@@ -312,6 +314,9 @@ public class BeanUsers implements Serializable {
 					bundle.getString("success_delete_user"));
 			cont.addMessage(null, msg);
 			users = service.findAllUsers();
+			
+			Log.info("Usuario " + vuser.getLogin() + " eliminado");
+			
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
@@ -319,6 +324,7 @@ public class BeanUsers implements Serializable {
 					bundle.getString("error"),
 					bundle.getString("error_delete_user"));
 			cont.addMessage(null, msg);
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos a la vista de error
 		}
 
@@ -336,10 +342,12 @@ public class BeanUsers implements Serializable {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					bundle.getString("success"), message));
 			users = service.findAllUsers();
+			Log.info("Usuario " + vuser.getLogin() + " desactivado");
 			return "exito";
 		} catch (BusinessException e) {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					bundle.getString("error"), e.getMessage()));
+			Log.error(e.getMessage());
 			return null;
 		}
 
@@ -357,10 +365,12 @@ public class BeanUsers implements Serializable {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					bundle.getString("success"), message));
 			users = service.findAllUsers();
+			Log.info("Usuario " + vuser.getLogin() + " activado");
 			return "exito";
 		} catch (BusinessException e) {
 			cont.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					bundle.getString("error"), e.getMessage()));
+			Log.error(e.getMessage());
 			return null;
 		}
 
@@ -394,34 +404,14 @@ public class BeanUsers implements Serializable {
 			service.deleteTask(vtask.getId());
 
 			this.listadoTareas();
+			Log.info("Tarea " + vtask.getTitle() + " eliminada");
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos a la vista de error
 		}
-	}
-
-	public String salva() {
-		UserService service;
-		try {
-			// Acceso a la implementacion de la capa de negocio
-			// a trav��s de la factor��a
-			service = Services.getUserService();
-			// Salvamos o actualizamos el User segun sea una operacion de alta
-			// o de edici��n
-			if (user.getId() == null) {
-				service.registerUser(user);
-			} else {
-				service.updateUserDetails(user);
-			}
-			return "exito"; // Nos vamos a la vista de detalles usuario
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "error"; // Nos vamos a la vista de error.
-		}
-
 	}
 
 	public String reiniciar() {
@@ -437,6 +427,7 @@ public class BeanUsers implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, bundle
 							.getString("success"), bundle
 							.getString("success_restart_base")));
+			Log.info("Base de datos reiniciada");
 			return "exito"; // Nos vamos a la vista de listado.
 
 		} catch (Exception e) {
@@ -446,6 +437,7 @@ public class BeanUsers implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle
 							.getString("error"), bundle
 							.getString("error_restart_base")));
+			Log.error(e.getMessage());
 			return "error"; // Nos vamos a la vista de error
 		}
 	}
