@@ -66,13 +66,13 @@
 					<p:column sortBy="#{vtask.created}" id="task_created">
 						<f:facet name="header">#{msgs.tablaCreated}</f:facet>
 						<h:outputText value="#{vtask.created}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
 						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{vtask.finished}" id="task_finished">
 						<f:facet name="header">#{msgs.tablaFinished}</f:facet>
 						<h:outputText value="#{vtask.finished}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
 						</h:outputText>
 					</p:column>
 					<p:column sortBy="#{vtask.planned}" id="task_planned">
@@ -80,12 +80,12 @@
 						<h:outputText style="color:red"
 							rendered="#{vtask.late and controller.colorFecha}"
 							value="#{vtask.planned}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
 						</h:outputText>
 						<h:outputText
 							rendered="#{!(vtask.late and controller.colorFecha)}"
 							value="#{vtask.planned}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
 						</h:outputText>
 					</p:column>
 					<p:column>
