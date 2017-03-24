@@ -90,7 +90,8 @@ public class Task implements Comparable<Task>{
 
 	public boolean isLate(){
 		if(planned != null){
-			return planned.before(new Date());
+			//return planned.before(new Date());
+			return DateUtil.diffDays(new Date(), this.planned)>0;
 		}else{
 			return false;
 		}
