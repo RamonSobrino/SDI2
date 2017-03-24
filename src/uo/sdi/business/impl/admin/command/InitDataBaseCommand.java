@@ -99,7 +99,7 @@ public class InitDataBaseCommand implements Command<Void> {
 					Task tarea = new Task();
 					tarea.setUserId(u.getId());
 					tarea.setTitle("Tarea " + i);
-					tarea.setPlanned(DateUtil.addDays(DateUtil.today(), i%6));
+					tarea.setPlanned(DateUtil.addDays(DateUtil.today(), i%6+1));
 					taskServices.createTask(tarea);
 				}
 				

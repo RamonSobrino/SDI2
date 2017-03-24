@@ -2,6 +2,7 @@ package uo.sdi.presentation;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -236,7 +237,12 @@ public class BeanUsers implements Serializable {
 			User user = (User) session.getAttribute("LOGGEDIN_USER");
 
 			List<Task> lista = service.findWeekTasksByUserId(user.getId());
-			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+			List<Task> lista2 = new ArrayList<>();
+			for(Task task: lista){
+				if(task.getCategoryId()!=null)
+					lista2.add(task);
+			}
+			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Semana";
 			return "exito"; // Nos vamos a la vista listado.xhtml
@@ -263,7 +269,12 @@ public class BeanUsers implements Serializable {
 			User user = (User) session.getAttribute("LOGGEDIN_USER");
 
 			List<Task> lista = service.findTodayTasksByUserId(user.getId());
-			tasks = lista;// (Task[]) lista.toArray(new Task[0]);
+			List<Task> lista2 = new ArrayList<>();
+			for(Task task: lista){
+				if(task.getCategoryId()!=null)
+					lista2.add(task);
+			}
+			tasks = lista2;// (Task[]) lista.toArray(new Task[0]);
 
 			this.tipoListado = "Dia";
 
