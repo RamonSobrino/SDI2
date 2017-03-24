@@ -52,7 +52,11 @@
 					<p:column sortBy="#{vtask.title}" filterBy="#{vtask.title}"
 						filterMatchMode="contains" id="task_title">
 						<f:facet name="header">#{msgs.tablaTitle}</f:facet>
-						<h:outputText value="#{vtask.title}" />
+						<h:outputText rendered="#{!vtask.finish}"
+						value="#{vtask.title}" />
+						<h:outputText style="color:green"
+							rendered="#{vtask.finish}"
+							 value="#{vtask.title}" />
 					</p:column>
 					<p:column sortBy="#{vtask.categoryId}" id="task_category">
 						<f:facet name="header">#{msgs.tablaCategory}</f:facet>

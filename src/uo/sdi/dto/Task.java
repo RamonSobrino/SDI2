@@ -96,6 +96,14 @@ public class Task implements Comparable<Task>{
 			return false;
 		}
 	}
+	
+	public boolean isFinish(){
+		if(finished!=null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	@Override
 	public String toString() {
